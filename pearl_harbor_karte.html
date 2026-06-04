@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Pearl Harbor — 7. Dezember 1941</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Serif+4:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0d0e10;
+    --surface: #14171c;
+    --surface2: #1c2028;
+    --border: rgba(255,255,255,0.08);
+    --border2: rgba(255,255,255,0.15);
+    --text: #e8e0d0;
+    --text-muted: #8a8070;
+    --text-dim: #5a5548;
+    --red: #c8382a;
+    --red2: #a02820;
+    --blue: #2a5a8a;
+    --blue2: #1e4268;
+    --gold: #b88a2a;
+    --gold-light: #d4aa50;
+    --green: #2a6840;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 300;
+    line-height: 1.8;
+    min-height: 100vh;
+  }
+
+  /* === HEADER === */
+  header {
+    position: relative;
+    padding: 5rem 2rem 4rem;
+    text-align: center;
+    border-bottom: 0.5px solid var(--border);
+    overflow: hidden;
+  }
+
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 70% at 50% 30%, rgba(180,40,20,0.08), transparent 70%);
+    pointer-events: none;
+  }
+
+  .header-label {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.2rem;
+    font-family: 'Source Serif 4', serif;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: #f0e8d8;
+    margin-bottom: 0.8rem;
+    letter-spacing: -0.01em;
+  }
+
+  h1 span { color: var(--red); }
+
+  .header-date {
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: 0.15em;
+    margin-bottom: 2rem;
+  }
+
+  .header-rule {
+    width: 60px;
+    height: 1px;
+    background: var(--gold);
+    margin: 0 auto 2rem;
+    opacity: 0.5;
+  }
+
+  /* === INTRO TEXT === */
+  .intro {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .intro-lead {
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #d8d0c0;
+    margin-bottom: 1.5rem;
+    line-height: 1.7;
+    font-style: italic;
+  }
+
+  .intro p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+  }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 2.5rem;
+  }
+
+  .stat {
+    background: var(--surface);
+    padding: 1.2rem 1rem;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--gold-light);
+    display: block;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+
+  /* === MAP SECTION === */
+  .map-section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--text-muted);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 0.5px;
+    background: var(--border);
+  }
+
+  /* === FILTERS === */
+  .filter-bar {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 1.2rem;
+    align-items: center;
+  }
+
+  .filter-label {
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-right: 4px;
+  }
+
+  .wave-btn {
+    padding: 5px 14px;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    border: 0.5px solid var(--border2);
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Source Serif 4', serif;
+  }
+
+  .wave-btn:hover { background: var(--surface2); color: var(--text); }
+
+  .wave-btn.active {
+    background: var(--red);
+    color: #fff;
+    border-color: var(--red);
+  }
+
+  .wave-btn.active.blue { background: var(--blue); border-color: var(--blue); }
+  .wave-btn.active.gold { background: var(--gold); border-color: var(--gold); color: #000; }
+
+  /* === MAP CONTAINER === */
+  #ph-map {
+    width: 100%;
+    background: #162030;
+    border: 0.5px solid var(--border2);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  svg#island { display: block; width: 100%; height: auto; }
+
+  .event-dot { cursor: pointer; transition: r 0.15s; }
+  .event-dot:hover { r: 11; }
+
+  /* === INFO PANEL === */
+  #info-panel {
+    margin-top: 1rem;
+    background: var(--surface);
+    border: 0.5px solid var(--border2);
+    border-radius: 4px;
+    padding: 1.2rem 1.5rem;
+    min-height: 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  #info-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    font-weight: 400;
+    margin-bottom: 2px;
+    transition: color 0.2s;
+  }
+
+  #info-time {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+  }
+
+  #info-desc {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  /* === LEGEND === */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 24px;
+    margin-top: 1rem;
+    padding: 12px 14px;
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+  }
+
+  .legend-row {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+  }
+
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+  /* === TIMELINE === */
+  .timeline-section {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2rem 2rem 4rem;
+    border-top: 0.5px solid var(--border);
+  }
+
+  .timeline { position: relative; padding-left: 2rem; }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0; bottom: 0;
+    width: 0.5px;
+    background: var(--border2);
+  }
+
+  .tl-item {
+    position: relative;
+    margin-bottom: 1.8rem;
+    padding-bottom: 1.8rem;
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .tl-item:last-child { border-bottom: none; margin-bottom: 0; }
+
+  .tl-dot {
+    position: absolute;
+    left: -2.35rem;
+    top: 4px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    border: 1px solid currentColor;
+    background: var(--bg);
+  }
+
+  .tl-time {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .tl-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.98rem;
+    color: #d8d0c0;
+    margin-bottom: 4px;
+  }
+
+  .tl-desc {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+
+  /* === FOOTER === */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    border-top: 0.5px solid var(--border);
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <p class="header-label">Historische Dokumentation</p>
+  <h1>Angriff auf <span>Pearl Harbor</span></h1>
+  <p class="header-date">7. Dezember 1941 — Oahu, Hawaii</p>
+  <div class="header-rule"></div>
+</header>
+
+<!-- INTRO -->
+<section class="intro">
+  <p class="intro-lead">
+    „Ein Tag, der in Schande leben wird" — Präsident Franklin D. Roosevelt, 8. Dezember 1941.
+  </p>
+  <p>
+    Am frühen Morgen des 7. Dezember 1941 führten japanische Streitkräfte einen überraschenden Luftangriff auf den amerikanischen Marinestützpunkt Pearl Harbor auf der Insel Oahu, Hawaii, durch. Der Angriff erfolgte in zwei Wellen und dauerte weniger als zwei Stunden — doch seine Folgen veränderten den Lauf des Zweiten Weltkriegs grundlegend.
+  </p>
+  <p>
+    Japan hatte den Angriff als präventiven Schlag konzipiert, um die amerikanische Pazifikflotte auszuschalten und sich Zeit für die Expansion in Südostasien zu verschaffen. Was die Planer nicht bedachten: Die drei Flugzeugträger der Pazifikflotte waren an diesem Morgen nicht im Hafen. Sie würden zum Herzstück der amerikanischen Gegenwehr werden.
+  </p>
+  <p>
+    Am Tag nach dem Angriff erklärten die Vereinigten Staaten Japan den Krieg. Deutschland und Italien erklärten daraufhin den USA den Krieg — Amerika war damit in den Zweiten Weltkrieg eingetreten.
+  </p>
+
+  <div class="stats-row">
+    <div class="stat"><span class="stat-num">2.403</span><span class="stat-label">Gefallene Amerikaner</span></div>
+    <div class="stat"><span class="stat-num">1.178</span><span class="stat-label">Verwundete</span></div>
+    <div class="stat"><span class="stat-num">350+</span><span class="stat-label">Japanische Flugzeuge</span></div>
+    <div class="stat"><span class="stat-num">8</span><span class="stat-label">Schlachtschiffe getroffen</span></div>
+    <div class="stat"><span class="stat-num">2</span><span class="stat-label">Angriffswellen</span></div>
+    <div class="stat"><span class="stat-num">110 min</span><span class="stat-label">Dauer des Angriffs</span></div>
+  </div>
+</section>
+
+<!-- MAP -->
+<section class="map-section">
+  <h2 class="section-title">Interaktive Karte</h2>
+
+  <div class="filter-bar">
+    <span class="filter-label">Zeige:</span>
+    <button class="wave-btn active gold" id="btn-all" onclick="filterWave('all')">Alle Ereignisse</button>
+    <button class="wave-btn" id="btn-1" onclick="filterWave(1)">1. Welle — 07:40</button>
+    <button class="wave-btn" id="btn-2" onclick="filterWave(2)">2. Welle — 08:40</button>
+    <button class="wave-btn" id="btn-fleet" onclick="filterWave('fleet')">Flotte &amp; Marine</button>
+  </div>
+
+  <div id="ph-map">
+    <svg id="island" viewBox="0 0 600 620" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="#c8382a" opacity="0.9"/>
+        </marker>
+        <marker id="arr-blue" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="#5a9ad0" opacity="0.9"/>
+        </marker>
+      </defs>
+
+      <rect width="600" height="620" fill="#162030"/>
+
+      <text x="18" y="160" font-size="12" fill="#5a9ad0" font-weight="400" opacity="0.6" font-family="Georgia, serif">Kaua'i Kanal</text>
+      <text x="470" y="580" font-size="12" fill="#5a9ad0" font-weight="400" opacity="0.6" font-family="Georgia, serif">Kaiwi Kanal</text>
+
+      <polygon points="
+        220,18 270,22 320,30 360,50 390,80 410,110 415,145 400,185 420,220 440,240 450,270
+        445,310 420,340 390,370 370,400 380,430 370,460 340,490 300,510 260,520 230,515
+        200,500 175,470 160,440 150,410 155,380 140,355 120,340 100,320 85,300 80,275
+        85,250 100,225 95,200 100,175 110,155 125,130 140,110 165,90 185,65 205,40"
+        fill="#2a3a28" stroke="#3a5035" stroke-width="1.2"/>
+
+      <polygon points="
+        225,22 265,25 305,33 340,52 365,75 382,102 388,135 375,170 392,205 410,225 420,255
+        415,292 393,322 368,352 352,382 360,410 352,440 326,468 292,487 255,497 226,493
+        200,480 178,454 165,426 156,398 160,370 147,346 128,332 110,314 97,294 92,272
+        96,249 110,225 106,202 112,178 122,158 136,135 150,116 172,96 190,72 208,48"
+        fill="none" stroke="#4a6845" stroke-width="0.5" opacity="0.4"/>
+
+      <polygon points="
+        305,320 310,335 325,355 340,365 360,360 370,340 365,320 350,305 330,308"
+        fill="#1e3828" stroke="#3a5035" stroke-width="1"/>
+
+      <text x="82" y="262" font-size="9" fill="#7a9870" font-style="italic" font-family="Georgia,serif">Ka'ala 1.225m</text>
+      <ellipse cx="100" cy="255" rx="20" ry="16" fill="#3a5535" opacity="0.4"/>
+
+      <text x="105" y="170" font-size="10" fill="#9a9080" font-family="Georgia,serif">Hale'iwa</text>
+      <text x="210" y="232" font-size="10" fill="#9a9080" font-family="Georgia,serif">Wahiawa</text>
+      <text x="62" y="295" font-size="10" fill="#9a9080" font-family="Georgia,serif">Wai'anae</text>
+      <text x="58" y="378" font-size="10" fill="#9a9080" font-family="Georgia,serif">Lualualei</text>
+      <text x="250" y="478" font-size="11" fill="#c8b888" font-weight="400" font-family="Georgia,serif">Pearl Harbor</text>
+      <text x="335" y="528" font-size="11" fill="#b8a878" font-family="Georgia,serif">Honolulu</text>
+      <text x="388" y="293" font-size="10" fill="#9a9080" font-family="Georgia,serif">Kane'ohe</text>
+      <text x="412" y="432" font-size="10" fill="#9a9080" font-family="Georgia,serif">Bellows</text>
+      <text x="222" y="388" font-size="10" fill="#9a9080" font-family="Georgia,serif">Wheeler</text>
+      <text x="285" y="552" font-size="10" fill="#9a9080" font-family="Georgia,serif">Hickam Airbase</text>
+      <text x="395" y="225" font-size="10" fill="#9a9080" font-family="Georgia,serif">Kane'ohe Airbase</text>
+      <text x="254" y="48" font-size="10" fill="#9a9080" font-family="Georgia,serif">La'ie</text>
+      <text x="205" y="28" font-size="10" fill="#9a9080" font-family="Georgia,serif">Kahuka Point</text>
+
+      <path d="M 310 420 Q 290 400 280 380 Q 270 360 285 340 Q 295 320 310 315 Q 330 308 350 315 Q 365 325 368 345 Q 372 365 355 380 Q 340 395 320 410 Z" fill="#243838" stroke="#3a5850" stroke-width="1" opacity="0.7"/>
+
+      <path class="wave-path w1" d="M 160 50 Q 160 120 200 180 Q 220 210 250 230 Q 270 250 280 280 Q 290 310 295 340" stroke="#5a9ad0" stroke-width="1.8" fill="none" stroke-dasharray="8,4" opacity="0.7" marker-end="url(#arr-blue)"/>
+      <path class="wave-path w1" d="M 160 50 Q 140 130 150 200 Q 160 240 180 280 Q 200 310 230 330 Q 255 345 275 360" stroke="#5a9ad0" stroke-width="1.8" fill="none" opacity="0.7" marker-end="url(#arr-blue)"/>
+      <path class="wave-path w1" d="M 160 50 Q 180 100 210 150 Q 230 185 245 215 Q 260 250 270 290 Q 278 320 285 345" stroke="#5a9ad0" stroke-width="2.2" fill="none" opacity="0.7" marker-end="url(#arr-blue)"/>
+
+      <path class="wave-path w2" d="M 520 80 Q 480 140 460 200 Q 445 245 420 280 Q 395 310 360 335 Q 340 350 318 358" stroke="#c8382a" stroke-width="1.8" fill="none" stroke-dasharray="6,3" opacity="0.7" marker-end="url(#arr)"/>
+      <path class="wave-path w2" d="M 520 80 Q 500 160 480 230 Q 460 280 430 320 Q 405 350 375 365 Q 350 375 325 375" stroke="#c8382a" stroke-width="1.8" fill="none" opacity="0.7" marker-end="url(#arr)"/>
+      <path class="wave-path w2" d="M 520 80 Q 510 150 500 220 Q 490 270 470 310 Q 450 345 420 365 Q 395 380 365 385 Q 340 390 318 385" stroke="#c8382a" stroke-width="2.2" fill="none" opacity="0.7" marker-end="url(#arr)"/>
+
+      <g id="dots-layer"></g>
+    </svg>
+  </div>
+
+  <div id="info-panel">
+    <div id="info-title">Klicke auf einen Punkt, um Details zu sehen.</div>
+    <div id="info-time"></div>
+    <div id="info-desc"></div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-row"><div class="legend-dot" style="background:#c8382a;"></div> 1. Welle (07:40)</div>
+    <div class="legend-row"><div class="legend-dot" style="background:#a02820;"></div> 2. Welle (08:40)</div>
+    <div class="legend-row"><div class="legend-dot" style="background:#2a5a8a;"></div> Flotte / Schiffe</div>
+    <div class="legend-row"><div class="legend-dot" style="background:#2a6840;"></div> Warnung / Radar</div>
+    <div class="legend-row" style="margin-left:4px;"><svg width="28" height="10"><line x1="0" y1="5" x2="20" y2="5" stroke="#5a9ad0" stroke-width="1.8" stroke-dasharray="5,3"/></svg> Flugroute 1. Welle</div>
+    <div class="legend-row" style="margin-left:4px;"><svg width="28" height="10"><line x1="0" y1="5" x2="20" y2="5" stroke="#c8382a" stroke-width="1.8" stroke-dasharray="5,3"/></svg> Flugroute 2. Welle</div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="timeline-section">
+  <h2 class="section-title">Chronologie des Angriffs</h2>
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-dot" style="color:#2a6840;"></div>
+      <div class="tl-time" style="color:#2a6840;">06:10 Uhr</div>
+      <div class="tl-title">Start der Angriffswellen</div>
+      <div class="tl-desc">Die japanische Trägerkampfgruppe Kido Butai — sechs Flugzeugträger, etwa 440 km nördlich von Oahu — schickt die erste Welle von 183 Flugzeugen in Richtung Hawaii.</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot" style="color:#2a6840;"></div>
+      <div class="tl-time" style="color:#2a6840;">06:45 Uhr</div>
+      <div class="tl-title">USS Ward versenkt U-Boot</div>
+      <div class="tl-desc">Erster amerikanischer Schuss des Krieges: Der Zerstörer USS Ward versenkt ein japanisches Miniatur-U-Boot. Die Meldung wird in der Kommandokette verzögert weitergegeben.</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot" style="color:#2a6840;"></div>
+      <div class="tl-time" style="color:#2a6840;">07:02 Uhr</div>
+      <div class="tl-title">Radar-Warnung ignoriert</div>
+      <div class="tl-desc">Die Opana-Radarstation meldet eine große Flugzeugformation. Der diensthabende Offizier hält sie irrtümlich für erwartete B-17-Bomber aus Kalifornien und ignoriert die Warnung.</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot" style="color:#c8382a;"></div>
+      <div class="tl-time" style="color:#c8382a;">07:48 Uhr — Erste Angriffe</div>
+      <div class="tl-title">Kane'ohe Airbase brennt</div>
+      <div class="tl-desc">Die 1. Welle trifft zuerst Kane'ohe — drei Minuten vor dem Hauptangriff. Alle 33 PBY-Catalina-Flugboote werden zerstört oder beschädigt.</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot" style="color:#c8382a;"></div>
+      <div class="tl-time" style="color:#c8382a;">07:51–07:55 Uhr</div>
+      <div class="tl-title">Wheeler &amp; Hickam werden angegriffen</div>
+      <div class="tl-desc">Wheeler Airbase verliert 80 % der Jäger am Boden. Hickam wird bombardiert, während Soldaten frühstücken. Kaum ein Flugzeug kann rechtzeitig starten.</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot" style="color:#c8382a;"></div>
+      <div class="tl-time" style="color:#c8382a;">07:53 Uhr</div>
+      <div class="tl-title">"Tora! Tora! Tora!"</div>
+      <div class="tl-desc">Kommandant Mitsuo Fuchida sendet das Codewort — Signal für die vollständige Überraschung. Japan hat sein Ziel erreicht: Die Flotte ist unvorbereitet.</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot" style="color:#c8382a;"></div>
+      <div class="tl-time" style="color:#c8382a;">07:57 Uhr</div>
+      <div class="tl-title">USS Oklahoma kentert</div>
+      <div class="tl-desc">Fünf Torpedos treffen die Oklahoma — sie kentert und sinkt. 429 Besatzungsmitglieder sterben, darunter 32, die noch stundenlang im Rumpf eingeschlossen sind.</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot" style="color:#c8382a;"></div>
+      <div class="tl-time" style="color:#c8382a;">08:10 Uhr</div>
+      <div class="tl-title">USS Arizona explodiert</div>
+      <div class="tl-desc">Eine Panzerbombe trifft das Munitionsmagazin der Arizona. Das Schiff explodiert und sinkt in Minuten — 1.177 Besatzungsmitglieder sterben. Fast die Hälfte aller Todesopfer.</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot" style="color:#a02820;"></div>
+      <div class="tl-time" style="color:#a02820;">08:40 Uhr — Zweite Welle</div>
+      <div class="tl-title">167 Flugzeuge greifen erneut an</div>
+      <div class="tl-desc">Die 2. Welle zielt auf Hafenanlagen, Trockendocks und Flugplätze. Sie trifft auf organisierten Widerstand — 29 japanische Flugzeuge werden abgeschossen.</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot" style="color:#a02820;"></div>
+      <div class="tl-time" style="color:#a02820;">08:50 Uhr</div>
+      <div class="tl-title">USS Nevada versucht zu entkommen</div>
+      <div class="tl-desc">Als einziges Schlachtschiff mit aufgebautem Dampf versucht die Nevada den Hafen zu verlassen. Japanische Bomber greifen massiv an — sie setzt sich freiwillig auf Grund.</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot" style="color:#b88a2a;"></div>
+      <div class="tl-time" style="color:#b88a2a;">09:45 Uhr — Ende</div>
+      <div class="tl-title">Der Angriff ist vorbei</div>
+      <div class="tl-desc">Nach knapp zwei Stunden ziehen sich die japanischen Verbände zurück. Vizeadmiral Nagumo verzichtet auf eine 3. Welle — er vermeidet das Risiko und hält die Treibstoffdepots und Werften unversehrt. Eine folgenschwere Entscheidung.</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot" style="color:#b88a2a;"></div>
+      <div class="tl-time" style="color:#b88a2a;">8. Dezember 1941</div>
+      <div class="tl-title">USA erklärt Japan den Krieg</div>
+      <div class="tl-desc">Präsident Roosevelt spricht vor dem Kongress. Mit nur einer Gegenstimme erklärt Amerika Japan den Krieg. Deutschland und Italien folgen mit Kriegserklärungen — die USA sind im Zweiten Weltkrieg.</div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  Historische Dokumentation · Pearl Harbor, 7. Dezember 1941 · Erstellt mit interaktiver Kartendarstellung
+</footer>
+
+<script>
+const events = [
+  { id:'radar', wave:'fleet', cx:220, cy:35, r:8, color:'#2a7848',
+    title:'Radar-Warnung ignoriert', time:'07:02 Uhr',
+    desc:'Soldaten auf der Opana-Radarstation entdecken eine große Gruppe von Flugzeugen nördlich von Oahu. Der diensthabende Offizier hält sie irrtümlich für amerikanische B-17-Bomber und ignoriert die Meldung — eine der folgenreichsten Fehlentscheidungen des Morgens.' },
+  { id:'midget', wave:'fleet', cx:238, cy:418, r:8, color:'#2a5a8a',
+    title:'Miniatur-U-Boot versenkt', time:'06:45 Uhr',
+    desc:'Der Zerstörer USS Ward versenkt ein japanisches Miniatur-U-Boot vor der Hafeneinfahrt von Pearl Harbor — der erste amerikanische Schuss des Pazifikkrieges. Die Meldung wird in der Kommandokette so lange weitergegeben, dass keine Warnung mehr rechtzeitig ausgelöst werden kann.' },
+  { id:'arizona', wave:1, cx:295, cy:358, r:10, color:'#c8382a',
+    title:'USS Arizona — 1.177 Tote', time:'08:10 Uhr',
+    desc:'Eine 800-kg-Panzerbombe durchschlägt das Vorschiff der USS Arizona und trifft das Vorwärts-Munitionsmagazin. Das Schiff explodiert mit einer gewaltigen Druckwelle und sinkt in weniger als neun Minuten. 1.177 Besatzungsmitglieder sterben — fast die Hälfte aller Todesopfer des gesamten Angriffs. Das Wrack liegt noch heute im Hafenboden.' },
+  { id:'oklahoma', wave:1, cx:283, cy:373, r:9, color:'#c8382a',
+    title:'USS Oklahoma kentert', time:'07:57 Uhr',
+    desc:'Die USS Oklahoma wird von fünf japanischen Torpedos getroffen, kentert innerhalb von Minuten und sinkt auf dem Meeresgrund. 429 Besatzungsmitglieder sterben, darunter 32, die noch stundenlang nach dem Angriff im umgekehrten Rumpf eingeschlossen sind und durch Klopfsignale ihre Position anzeigen.' },
+  { id:'hickam', wave:1, cx:302, cy:522, r:9, color:'#c8382a',
+    title:'Hickam Airbase bombardiert', time:'07:55 Uhr',
+    desc:'Japanische Bomber der 1. Welle zerstören einen Großteil der Flugzeuge auf dem Boden, bevor sie starten können. Die Hauptkaserne wird direkt getroffen, während Soldaten frühstücken. Hickam verliert die meisten Maschinen, bevor überhaupt Alarm ausgelöst wird.' },
+  { id:'wheeler', wave:1, cx:240, cy:368, r:9, color:'#c8382a',
+    title:'Wheeler Airbase angegriffen', time:'07:51 Uhr',
+    desc:'Japanische Sturzkampfbomber der 1. Welle treffen Wheeler Airbase und zerstören reihenweise aufgereihte P-40-Jäger. Etwa 80 % der Maschinen werden am Boden vernichtet. Die wenigen Piloten, die aufsteigen können, liefern sich heldenmütige aber aussichtslose Luftkämpfe.' },
+  { id:'kaneohe', wave:1, cx:432, cy:222, r:9, color:'#c8382a',
+    title:'Kane\'ohe — erster Angriff', time:'07:48 Uhr',
+    desc:'Kane\'ohe Airbase wird als allererstes Ziel angegriffen — drei Minuten vor dem Hauptangriff auf Pearl Harbor. Alle 33 PBY-Catalina-Flugboote der Basis werden zerstört oder schwer beschädigt. Die Basis brennt vollständig aus.' },
+  { id:'nevada', wave:2, cx:308, cy:342, r:9, color:'#a02820',
+    title:'USS Nevada — versuchter Ausbruch', time:'08:50 Uhr',
+    desc:'Die USS Nevada ist das einzige Schlachtschiff, das an diesem Morgen Dampf aufgebaut hatte. Sie versucht als einziges großes Schiff den Hafen zu verlassen. Japanische Bomber der 2. Welle konzentrieren alle Kräfte auf sie. Um die Hafeneinfahrt nicht zu blockieren, setzt sie sich freiwillig auf Grund.' },
+  { id:'wave2-hickam', wave:2, cx:315, cy:510, r:8, color:'#a02820',
+    title:'2. Welle trifft Hafenanlagen', time:'08:40 Uhr',
+    desc:'167 Flugzeuge der 2. Welle greifen Trockendocks, Hafenanlagen und Flugplätze an. Die USS Pennsylvania im Trockendock wird beschädigt, zwei Zerstörer daneben sinken. Diesmal erwartet sie organisierter Flak-Widerstand: 29 japanische Maschinen werden abgeschossen.' },
+  { id:'bellows', wave:2, cx:447, cy:418, r:8, color:'#a02820',
+    title:'Bellows Airbase — 2. Welle', time:'09:00 Uhr',
+    desc:'Bellows Airbase wird in der 2. Welle angegriffen. Mehrere P-40-Piloten versuchen trotzdem zu starten. Einige werden noch auf der Startbahn abgeschossen. Lieutenant George Whiteman fällt beim Startversuch — einer der tragischsten Momente des Angriffs.' },
+  { id:'fleet', wave:'fleet', cx:294, cy:347, r:11, color:'#2a5a8a',
+    title:'Pazifikflotte — "Battleship Row"', time:'07:40–09:45 Uhr',
+    desc:'Acht amerikanische Schlachtschiffe liegen in der "Battleship Row". Am Ende sind alle getroffen oder beschädigt. Vier sinken, darunter Arizona und Oklahoma. Der entscheidende Faktor: Die drei Flugzeugträger der Pazifikflotte — Lexington, Enterprise und Saratoga — sind an diesem Morgen zufällig nicht im Hafen. Sie werden zum Fundament der amerikanischen Gegenwehr.' },
+  { id:'fuchida', wave:'fleet', cx:168, cy:62, r:8, color:'#a87828',
+    title:'"Tora! Tora! Tora!"', time:'07:53 Uhr',
+    desc:'Kommandant Mitsuo Fuchida sendet das Codewort "Tora! Tora! Tora!" (Tiger!) — das Signal für die vollständige Überraschung des Angriffs. Japan hat sein strategisches Ziel erreicht. Fuchida leitet persönlich 183 Flugzeuge der ersten Angriffswelle und überlebt den Krieg.' }
+];
+
+let currentWave = 'all';
+
+function filterWave(w) {
+  currentWave = w;
+  document.querySelectorAll('.wave-btn').forEach(b => b.classList.remove('active','blue','gold'));
+  const btn = document.getElementById('btn-' + (w==='all'?'all':w===1?'1':w===2?'2':'fleet'));
+  btn.classList.add('active');
+  if(w==='all') btn.classList.add('gold');
+  else if(w==='fleet') btn.classList.add('blue');
+
+  document.querySelectorAll('.wave-path').forEach(p => {
+    if(w==='all') p.style.opacity='0.7';
+    else if(w===1) p.style.opacity=p.classList.contains('w1')?'0.9':'0.1';
+    else if(w===2) p.style.opacity=p.classList.contains('w2')?'0.9':'0.1';
+    else p.style.opacity='0.12';
+  });
+
+  renderDots();
+  resetInfo();
+}
+
+function resetInfo() {
+  document.getElementById('info-title').textContent='Klicke auf einen Punkt, um Details zu sehen.';
+  document.getElementById('info-title').style.color='#8a8070';
+  document.getElementById('info-title').style.fontWeight='400';
+  document.getElementById('info-time').textContent='';
+  document.getElementById('info-desc').textContent='';
+}
+
+function renderDots() {
+  const layer = document.getElementById('dots-layer');
+  layer.innerHTML='';
+  events.forEach(ev => {
+    const show = currentWave==='all' || ev.wave===currentWave || (currentWave==='fleet' && ev.wave==='fleet');
+    const opacity = show?'1':'0.12';
+    const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+    g.style.cursor='pointer'; g.style.opacity=opacity;
+    g.onclick=()=>showInfo(ev);
+
+    const pulse=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    pulse.setAttribute('cx',ev.cx); pulse.setAttribute('cy',ev.cy);
+    pulse.setAttribute('r',ev.r+6); pulse.setAttribute('fill',ev.color); pulse.setAttribute('opacity','0.15');
+
+    const dot=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    dot.setAttribute('cx',ev.cx); dot.setAttribute('cy',ev.cy);
+    dot.setAttribute('r',ev.r); dot.setAttribute('fill',ev.color);
+    dot.setAttribute('stroke','rgba(255,255,255,0.3)'); dot.setAttribute('stroke-width','1');
+    dot.classList.add('event-dot');
+
+    g.appendChild(pulse); g.appendChild(dot); layer.appendChild(g);
+  });
+}
+
+function showInfo(ev) {
+  document.getElementById('info-title').textContent=ev.title;
+  document.getElementById('info-title').style.color=ev.color;
+  document.getElementById('info-title').style.fontWeight='400';
+  document.getElementById('info-time').textContent=ev.time;
+  document.getElementById('info-desc').textContent=ev.desc;
+}
+
+renderDots();
+</script>
+</body>
+</html>
